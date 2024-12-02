@@ -185,7 +185,6 @@ exports.deleteType = async (req, res) => {
 
 exports.deleteProperty = async (req, res) => {
   try {
-    console.log(req.params);
     const { id } = req.params;
     const property = await Property.findByIdAndDelete(id);
     if (!property) {
@@ -207,7 +206,7 @@ exports.getPropertyType = async (req, res) => {
     }
     return res.status(200).json({ propertyTypes });
   } catch (err) {
-    console.error("Error fetching property types:", err); // Enhanced logging for better error tracking
+    console.error("Error fetching property types:", err);
     return res
       .status(500)
       .json({ msg: "Internal Server Error", error: err.message });
