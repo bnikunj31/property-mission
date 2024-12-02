@@ -33,13 +33,19 @@ app.use(
 );
 
 //? API's
-app.use("/users", users);
-app.use("/enquiry", enquiries);
-app.use("/property", property);
+app.use("/api/users", users);
+app.use("/api/enquiry", enquiries);
+app.use("/api/property", property);
 
 if (process.env.NODE_ENV === "production") {
   const buildPath = path.join(__dirname, "uploads/dist");
   app.use(express.static(buildPath));
+  app.use("/api", (req, res, next) => {
+    if (req.url.startsWith("/api")) {
+      return next();
+    }
+    next();
+  });
   app.get("*", (req, res) => {
     res.sendFile(path.join(buildPath, "index.html"));
   });
